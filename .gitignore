@@ -1,0 +1,28 @@
+# Local portable Node environment
+node/
+node.zip
+
+# Dependency directories
+node_modules/
+**/node_modules/
+
+# Production build outputs
+dist/
+**/dist/
+
+# Local environment variables containing API keys / secrets
+.env
+**/.env
+
+# Editor settings and temp files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS metadata files
+.DS_Store
+Thumbs.db
