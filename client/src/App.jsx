@@ -553,7 +553,7 @@ export default function App() {
                         <span className="inspector-label" style={{ display: 'block', marginBottom: '0.25rem' }}>Active Links:</span>
                         <div style={{ maxHeight: '100px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
                           {selectedItem.connections.map((c, i) => (
-                            <div key={i} style={{ fontSize: '0.75rem', color: '#cbd5e1', display: 'flex', justifyContent: 'space-between' }}>
+                            <div key={i} style={{ fontSize: '0.75rem', color: 'var(--text-primary)', display: 'flex', justifyContent: 'space-between' }}>
                               <span>{c.localPort || 'any'} ➔ {c.hostname}</span>
                               <span style={{ color: 'var(--text-secondary)' }}>{c.remotePort || 'any'}</span>
                             </div>
@@ -783,7 +783,7 @@ export default function App() {
 
               {/* Manual Builder Form */}
               {showManualBuilder && (
-                <div className="sidebar-section" style={{ backgroundColor: 'rgba(0,0,0,0.15)', borderBottom: '2px solid var(--border-color)' }}>
+                <div className="sidebar-section" style={{ backgroundColor: 'var(--bg-secondary)', borderBottom: '1px solid var(--border-light)' }}>
                   <div className="section-title">
                     <Plus size={18} />
                     Manual Network Builder
@@ -791,7 +791,7 @@ export default function App() {
 
                   {/* Node Add */}
                   <form onSubmit={handleAddNode} style={{ marginBottom: '1.25rem', borderBottom: '1px dashed var(--border-color)', paddingBottom: '1rem' }}>
-                    <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#fff', marginBottom: '0.5rem' }}>ADD INFRASTRUCTURE DEVICE</div>
+                    <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>ADD INFRASTRUCTURE DEVICE</div>
                     
                     <div className="form-row">
                       <div className="form-group">
@@ -852,7 +852,7 @@ export default function App() {
                   {/* Connection Add */}
                   {nodes.length >= 2 ? (
                     <form onSubmit={handleAddEdge}>
-                      <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#fff', marginBottom: '0.5rem' }}>CONNECT DEVICE PORTS</div>
+                      <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>CONNECT DEVICE PORTS</div>
                       
                       <div className="form-row">
                         <div className="form-group">
