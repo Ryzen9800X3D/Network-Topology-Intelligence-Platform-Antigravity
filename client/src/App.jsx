@@ -22,7 +22,174 @@ import { DataSet } from 'vis-data';
 import { Network as VisNetwork } from 'vis-network';
 import { getIconDataUrl } from './icons';
 
+// ==================== i18n Translations ====================
+const translations = {
+  zh: {
+    title: 'NOC 拓撲發現中心',
+    apiConnected: 'Gemini AI 已啟用',
+    apiMock: '本地 MOCK 模式',
+    apiOffline: '離線',
+    nodes: '節點',
+    edges: '連線',
+    topologyCanvasEmpty: '拓撲畫布為空',
+    uploadOrPaste: '上傳拓撲圖或貼上 CLI 日誌到側邊欄即可視覺化。',
+    aiDiscovery: 'AI 發現',
+    nocSecurityAudit: 'NOC 安全稽核',
+    discoveryInputs: '發現輸入',
+    consoleTextLogs: 'Console 文字日誌',
+    topologyDiagramImage: '拓撲圖影像',
+    pasteNetworkConsoleOutput: '在此貼上網路控制台輸出…（例如 show lldp neighbors detail, show mac address-table, show cdp neighbors detail）',
+    mergeMode: '合併模式',
+    appendToCanvas: '附加到畫布',
+    replaceCanvas: '替換畫布',
+    runAITextDiscovery: '執行 AI 文字發現',
+    uploadArchitectureDiagram: '上傳架構圖 / 白板草圖',
+    dragDropDiagram: '拖放拓撲圖到此處',
+    supportsFormats: '支援 PNG, JPG, SVG 或白板照片',
+    runMultimodalAI: '執行多模態 AI OCR',
+    manualBuilder: '手動建置',
+    hideBuilder: '隱藏建置器',
+    loadNocDemo: '載入 NOC 範例',
+    resetTopologyCanvas: '重置拓撲畫布',
+    manualNetworkBuilder: '手動網路建置器',
+    addInfrastructureDevice: '新增基礎設施設備',
+    hostname: '主機名稱',
+    deviceRole: '設備角色',
+    managementIP: '管理 IP',
+    macAddress: 'MAC 位址',
+    addNodeToCanvas: '新增節點到畫布',
+    connectDevicePorts: '連接設備埠',
+    sourceNode: '源節點',
+    destinationNode: '目標節點',
+    outboundPort: '出埠',
+    inboundPort: '入埠',
+    connectInterfaces: '連接介面',
+    addAtLeast2Devices: '至少新增 2 台設備以啟用實體埠連線。',
+    networkAuditCenter: '網路稽核中心',
+    securityShieldHealth: '安全防護健康度',
+    satisfactoryNetworkPosture: '網路狀態良好。冗餘與防火牆運作正常。',
+    vulnerabilitiesDetected: '偵測到漏洞。存在關鍵冗餘警報。',
+    severeNetworkPostureIssues: '嚴重網路問題。核心分裂或邊界威脅已暴露。',
+    noAuditItemsGenerated: '未產生稽核項目。',
+    reAuditActiveTopology: '重新稽核當前拓撲',
+    generateSecurityAudit: '產生安全稽核',
+    noActiveAuditReport: '尚未載入稽核報告。',
+    deviceType: '設備類型',
+    managementIPLabel: '管理 IP',
+    physicalMAC: '實體 MAC',
+    activeLinks: '活躍連線',
+    fromHost: '來源主機',
+    toHost: '目標主機',
+    outboundPortLabel: '出埠',
+    inboundPortLabel: '入埠',
+    notAutoDetected: '未自動偵測',
+    cannotConnectToItself: '無法將設備連接到自身。',
+    physicalConnectionExists: '這些設備之間已存在實體連線。',
+    deviceWithHostnameAlreadyExists: '已存在相同主機名稱的設備。',
+    discoveryError: '發現錯誤：',
+    failedToConnectBackend: '無法連接後端伺服器。請確保伺服器運行在 3001 端口。',
+    failedToExecuteImageOCR: '多模態影像分析執行失敗。',
+    auditError: '稽核錯誤：',
+    failedToRunSystemAudit: '系統稽核執行失敗。',
+    areYouSureWipeCanvas: '確定要清除當前畫布並重新開始嗎？',
+    footerText: 'NOC 自動發現引擎 &bull; Antigravity 智能設計 © 2026',
+    language: '語言',
+    selectLanguage: '選擇語言',
+    coreSwitch: '核心交換器',
+    switch: '交換器',
+    server: '伺服器',
+    storage: '儲存設備 SAN/NAS',
+    firewall: '防火牆',
+    select: '-- 請選擇 --',
+    mockModeWarning: '伺服器運行在 MOCK 模式（無 GEMINI_API_KEY）。',
+    cannotConnectToServerWarning: '無法連接後端伺服器。請確保伺服器運行在 3001 端口。',
+  },
+  en: {
+    title: 'NOC Topology Discovery Center',
+    apiConnected: 'Gemini AI Active',
+    apiMock: 'Local MOCK Mode',
+    apiOffline: 'Offline',
+    nodes: 'Nodes',
+    edges: 'Edges',
+    topologyCanvasEmpty: 'Topology Canvas Empty',
+    uploadOrPaste: 'Upload a topology diagram or paste CLI logs in the sidebar to visualize.',
+    aiDiscovery: 'AI Discovery',
+    nocSecurityAudit: 'NOC Security Audit',
+    discoveryInputs: 'Discovery Inputs',
+    consoleTextLogs: 'Console Text Logs',
+    topologyDiagramImage: 'Topology Diagram Image',
+    pasteNetworkConsoleOutput: 'Paste network console output here... (e.g. show lldp neighbors detail, show mac address-table, show cdp neighbors detail)',
+    mergeMode: 'Merge Mode',
+    appendToCanvas: 'Append to Canvas',
+    replaceCanvas: 'Replace Canvas',
+    runAITextDiscovery: 'Run AI Text Discovery',
+    uploadArchitectureDiagram: 'Upload Architecture Diagram / Whiteboard Sketch',
+    dragDropDiagram: 'Drag & drop your diagram image here',
+    supportsFormats: 'Supports PNG, JPG, SVG or whiteboard photos',
+    runMultimodalAI: 'Run Multimodal AI OCR',
+    manualBuilder: 'Manual Builder',
+    hideBuilder: 'Hide Builder',
+    loadNocDemo: 'Load NOC Demo',
+    resetTopologyCanvas: 'Reset topology Canvas',
+    manualNetworkBuilder: 'Manual Network Builder',
+    addInfrastructureDevice: 'ADD INFRASTRUCTURE DEVICE',
+    hostname: 'Hostname',
+    deviceRole: 'Device Role',
+    managementIP: 'Management IP',
+    macAddress: 'MAC Address',
+    addNodeToCanvas: 'Add Node to Canvas',
+    connectDevicePorts: 'CONNECT DEVICE PORTS',
+    sourceNode: 'Source Node',
+    destinationNode: 'Destination Node',
+    outboundPort: 'Outbound Port',
+    inboundPort: 'Inbound Port',
+    connectInterfaces: 'Connect Interfaces',
+    addAtLeast2Devices: 'Add at least 2 devices to enable physical port linkage.',
+    networkAuditCenter: 'Network Audit Center',
+    securityShieldHealth: 'Security Shield Health',
+    satisfactoryNetworkPosture: 'Satisfactory network posture. Redundancies and Firewalls active.',
+    vulnerabilitiesDetected: 'Vulnerabilities detected. Critical redundancy alerts present.',
+    severeNetworkPostureIssues: 'Severe network posture issues. Core split-brain or perimeter threat exposed.',
+    noAuditItemsGenerated: 'No audit items generated.',
+    reAuditActiveTopology: 'Re-Audit Active Topology',
+    generateSecurityAudit: 'Generate Security Audit',
+    noActiveAuditReport: 'No active audit report loaded.',
+    deviceType: 'Device Type',
+    managementIPLabel: 'Management IP',
+    physicalMACLabel: 'Physical MAC',
+    activeLinks: 'Active Links',
+    fromHost: 'From Host',
+    toHost: 'To Host',
+    outboundPortLabel: 'Outbound Port',
+    inboundPortLabel: 'Inbound Port',
+    notAutoDetected: 'Not Auto-detected',
+    cannotConnectToItself: 'Cannot connect a device to itself.',
+    physicalConnectionExists: 'A physical connection already exists between these devices.',
+    deviceWithHostnameAlreadyExists: 'Device with this hostname already exists.',
+    discoveryError: 'Discovery error: ',
+    failedToConnectBackend: 'Failed to connect to backend server endpoint.',
+    failedToExecuteImageOCR: 'Failed to execute image multimodal analysis.',
+    auditError: 'Audit error: ',
+    failedToRunSystemAudit: 'Failed to run system audit.',
+    areYouSureWipeCanvas: 'Are you sure you want to wipe the current canvas and start from scratch?',
+    footerText: 'NOC Auto-Discovery Engine &bull; Antigravity Agentic Design &copy; 2026',
+    language: 'Language',
+    selectLanguage: 'Select Language',
+    coreSwitch: 'Core Switch',
+    switch: 'Switch',
+    server: 'Server',
+    storage: 'Storage SAN/NAS',
+    firewall: 'Firewall',
+    select: '-- Select --',
+    mockModeWarning: 'Server running in MOCK mode (No GEMINI_API_KEY).',
+    cannotConnectToServerWarning: 'Cannot connect to backend server. Ensure server is running on port 3001.',
+  }
+};
+
 export default function App() {
+  const [lang, setLang] = useState('zh'); // 'zh' | 'en'
+  const t = translations[lang];
+
   // Canvas data
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
@@ -45,6 +212,19 @@ export default function App() {
   const [auditReport, setAuditReport] = useState(null);
   const [showManualBuilder, setShowManualBuilder] = useState(false);
   const [sidebarTab, setSidebarTab] = useState('discovery'); // 'discovery' | 'audit'
+
+  // Load language preference from localStorage on mount
+  useEffect(() => {
+    const savedLang = localStorage.getItem('ntip-lang');
+    if (savedLang && (savedLang === 'zh' || savedLang === 'en')) {
+      setLang(savedLang);
+    }
+  }, []);
+
+  // Save language preference when changed
+  useEffect(() => {
+    localStorage.setItem('ntip-lang', lang);
+  }, [lang]);
 
   // Manual Node Builder Form
   const [newNode, setNewNode] = useState({
@@ -77,7 +257,7 @@ export default function App() {
       .then(data => {
         if (data.warning && data.warning.includes('Mock')) {
           setServerMode('mock');
-          setWarningMessage('Server running in MOCK mode (No GEMINI_API_KEY).');
+          setWarningMessage(t.mockModeWarning);
         } else {
           setServerMode('connected');
           setWarningMessage('');
@@ -86,9 +266,9 @@ export default function App() {
       .catch(err => {
         console.error('Cannot connect to server:', err);
         setServerMode('error');
-        setWarningMessage('Cannot connect to backend server. Ensure server is running on port 3001.');
+        setWarningMessage(t.cannotConnectToServerWarning);
       });
-  }, []);
+  }, [t]);
 
   // Initialize and update vis-network canvas
   useEffect(() => {
@@ -243,7 +423,7 @@ export default function App() {
 
   const processFile = (file) => {
     if (!file.type.startsWith('image/')) {
-      alert('Only image files (PNG, JPG, SVG, Visio export) are supported.');
+      alert(lang === 'zh' ? '僅支援影像檔案 (PNG, JPG, SVG, Visio 匯出)。' : 'Only image files (PNG, JPG, SVG, Visio export) are supported.');
       return;
     }
     setUploadedFile(file);
@@ -288,11 +468,11 @@ export default function App() {
         // Run audit automatically on new discovery
         runAudit({ nodes: resData.data.nodes, edges: resData.data.edges });
       } else {
-        alert('Discovery error: ' + resData.error);
+        alert(t.discoveryError + resData.error);
       }
     } catch (err) {
       console.error(err);
-      alert('Failed to connect to backend server endpoint.');
+      alert(t.failedToConnectBackend);
     } finally {
       setLoading(false);
     }
@@ -325,11 +505,11 @@ export default function App() {
         // Run audit automatically on new discovery
         runAudit({ nodes: resData.data.nodes, edges: resData.data.edges });
       } else {
-        alert('Image Discovery error: ' + resData.error);
+        alert(t.discoveryError + resData.error);
       }
     } catch (err) {
       console.error(err);
-      alert('Failed to execute image multimodal analysis.');
+      alert(t.failedToExecuteImageOCR);
     } finally {
       setLoading(false);
     }
@@ -349,11 +529,11 @@ export default function App() {
         setAuditReport(resData.data);
         setSidebarTab('audit');
       } else {
-        alert('Audit error: ' + resData.error);
+        alert(t.auditError + resData.error);
       }
     } catch (err) {
       console.error(err);
-      alert('Failed to run system audit.');
+      alert(t.failedToRunSystemAudit);
     } finally {
       setLoading(false);
     }
@@ -366,7 +546,7 @@ export default function App() {
 
     const id = newNode.label.toLowerCase().replace(/[^a-z0-9]/g, '-');
     if (nodes.some(n => n.id === id)) {
-      alert('Device with this hostname already exists.');
+      alert(t.deviceWithHostnameAlreadyExists);
       return;
     }
 
@@ -387,7 +567,7 @@ export default function App() {
     e.preventDefault();
     if (!newEdge.from || !newEdge.to) return;
     if (newEdge.from === newEdge.to) {
-      alert('Cannot connect a device to itself.');
+      alert(t.cannotConnectToItself);
       return;
     }
 
@@ -398,7 +578,7 @@ export default function App() {
     );
 
     if (duplicate) {
-      alert('A physical connection already exists between these devices.');
+      alert(t.physicalConnectionExists);
       return;
     }
 
@@ -415,7 +595,7 @@ export default function App() {
 
   // Clear Canvas
   const handleClearCanvas = () => {
-    if (window.confirm('Are you sure you want to wipe the current canvas and start from scratch?')) {
+    if (window.confirm(t.areYouSureWipeCanvas)) {
       setNodes([]);
       setEdges([]);
       setSelectedItem(null);
@@ -458,24 +638,40 @@ export default function App() {
       <header className="noc-header">
         <div className="noc-logo">
           <Network size={28} />
-          <h1>NOC Topology Discovery Center</h1>
+          <h1>{t.title}</h1>
         </div>
-        
+
+        {/* Language Switcher */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <span style={{ fontSize: '0.75rem', color: '#64748b' }}>{t.language}:</span>
+          <select 
+            value={lang} 
+            onChange={(e) => setLang(e.target.value)}
+            style={{ 
+              background: '#1e293b', border: '1px solid #334155', borderRadius: '6px', 
+              color: '#f8fafc', padding: '0.25rem 0.5rem', fontSize: '0.75rem', cursor: 'pointer' 
+            }}
+          >
+            <option value="zh">🇹🇼 繁體中文</option>
+            <option value="en">🇺🇸 English</option>
+          </select>
+        </div>
+
         <div className="noc-status-bar">
           <div className="status-item">
             <span className={`status-indicator ${serverMode === 'connected' ? '' : 'blink'}`} style={{
               backgroundColor: serverMode === 'connected' ? '#22c55e' : serverMode === 'mock' ? '#f97316' : '#ef4444',
               boxShadow: serverMode === 'connected' ? '0 0 8px #22c55e' : serverMode === 'mock' ? '0 0 8px #f97316' : '0 0 8px #ef4444'
             }}></span>
-            <span>API Server: {serverMode === 'connected' ? 'Gemini AI Active' : serverMode === 'mock' ? 'Local MOCK Mode' : 'Offline'}</span>
+            <span>API Server: {serverMode === 'connected' ? t.apiConnected : serverMode === 'mock' ? t.apiMock : t.apiOffline}</span>
           </div>
           <div className="status-item">
             <Cpu size={16} />
-            <span>Nodes: {nodes.length}</span>
+            <span>{t.nodes}: {nodes.length}</span>
           </div>
           <div className="status-item">
             <Activity size={16} />
-            <span>Edges: {edges.length}</span>
+            <span>{t.edges}: {edges.length}</span>
           </div>
         </div>
       </header>
@@ -505,9 +701,9 @@ export default function App() {
               zIndex: 10
             }}>
               <Network size={64} style={{ color: '#cbd5e1', marginBottom: '1rem' }} />
-              <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#475569' }}>Topology Canvas Empty</h2>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#475569' }}>{t.topologyCanvasEmpty}</h2>
               <p style={{ fontSize: '0.85rem', color: '#94a3b8', marginTop: '0.25rem' }}>
-                Upload a topology diagram or paste CLI logs in the sidebar to visualize.
+                {t.uploadOrPaste}
               </p>
             </div>
           )}
@@ -531,26 +727,26 @@ export default function App() {
                 {selectedItem.type === 'node' ? (
                   <>
                     <div className="inspector-row">
-                      <span className="inspector-label">Device Type:</span>
+                      <span className="inspector-label">{t.deviceType}:</span>
                       <span className={`inspector-badge badge-${selectedItem.data.type}`}>
                         {selectedItem.data.type}
                       </span>
                     </div>
                     {selectedItem.data.ip && (
                       <div className="inspector-row">
-                        <span className="inspector-label">Management IP:</span>
+                        <span className="inspector-label">{t.managementIPLabel}:</span>
                         <span className="inspector-value">{selectedItem.data.ip}</span>
                       </div>
                     )}
                     {selectedItem.data.mac && (
                       <div className="inspector-row">
-                        <span className="inspector-label">Physical MAC:</span>
+                        <span className="inspector-label">{t.physicalMAC}:</span>
                         <span className="inspector-value">{selectedItem.data.mac}</span>
                       </div>
                     )}
                     {selectedItem.connections && selectedItem.connections.length > 0 && (
                       <div style={{ marginTop: '0.5rem', borderTop: '1px solid var(--border-color)', paddingTop: '0.5rem' }}>
-                        <span className="inspector-label" style={{ display: 'block', marginBottom: '0.25rem' }}>Active Links:</span>
+                        <span className="inspector-label" style={{ display: 'block', marginBottom: '0.25rem' }}>{t.activeLinks}:</span>
                         <div style={{ maxHeight: '100px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
                           {selectedItem.connections.map((c, i) => (
                             <div key={i} style={{ fontSize: '0.75rem', color: 'var(--text-primary)', display: 'flex', justifyContent: 'space-between' }}>
@@ -565,20 +761,20 @@ export default function App() {
                 ) : (
                   <>
                     <div className="inspector-row">
-                      <span className="inspector-label">From Host:</span>
+                      <span className="inspector-label">{t.fromHost}:</span>
                       <span className="inspector-value">{selectedItem.fromLabel}</span>
                     </div>
                     <div className="inspector-row">
-                      <span className="inspector-label">Outbound Port:</span>
-                      <span className="inspector-value">{selectedItem.data.fromPort || 'Not Auto-detected'}</span>
+                      <span className="inspector-label">{t.outboundPortLabel}:</span>
+                      <span className="inspector-value">{selectedItem.data.fromPort || t.notAutoDetected}</span>
                     </div>
                     <div className="inspector-row">
-                      <span className="inspector-label">To Host:</span>
+                      <span className="inspector-label">{t.toHost}:</span>
                       <span className="inspector-value">{selectedItem.toLabel}</span>
                     </div>
                     <div className="inspector-row">
-                      <span className="inspector-label">Inbound Port:</span>
-                      <span className="inspector-value">{selectedItem.data.toPort || 'Not Auto-detected'}</span>
+                      <span className="inspector-label">{t.inboundPortLabel}:</span>
+                      <span className="inspector-value">{selectedItem.data.toPort || t.notAutoDetected}</span>
                     </div>
                   </>
                 )}
@@ -597,7 +793,7 @@ export default function App() {
               onClick={() => setSidebarTab('discovery')}
             >
               <Terminal size={16} />
-              AI Discovery
+              {t.aiDiscovery}
             </button>
             <button 
               className={`tab-btn ${sidebarTab === 'audit' ? 'active' : ''}`}
@@ -606,7 +802,7 @@ export default function App() {
               style={{ opacity: auditReport ? 1 : 0.6 }}
             >
               <Shield size={16} />
-              NOC Security Audit
+              {t.nocSecurityAudit}
             </button>
           </div>
 
@@ -616,7 +812,7 @@ export default function App() {
               <div className="sidebar-section">
                 <div className="section-title">
                   <Cpu size={18} />
-                  Discovery Inputs
+                  {t.discoveryInputs}
                 </div>
 
                 <div className="tabs-container">
@@ -625,31 +821,28 @@ export default function App() {
                     onClick={() => setActiveTab('console')}
                   >
                     <Terminal size={14} />
-                    Console Text Logs
+                    {t.consoleTextLogs}
                   </button>
                   <button 
                     className={`tab-btn ${activeTab === 'image' ? 'active' : ''}`}
                     onClick={() => setActiveTab('image')}
                   >
                     <ImageIcon size={14} />
-                    Topology Diagram Image
+                    {t.topologyDiagramImage}
                   </button>
                 </div>
 
                 {activeTab === 'console' ? (
                   <div className="tab-content">
                     <div className="form-group">
-                      <label>CLI Neighbor logs / Show output</label>
-                      <textarea
-                        className="noc-textarea"
-                        placeholder="Paste network console output here... (e.g. show lldp neighbors detail, show mac address-table, show cdp neighbors detail)"
+                      <label>{t.pasteNetworkConsoleOutput}</label>
                         value={consoleLog}
                         onChange={(e) => setConsoleLog(e.target.value)}
                       />
                     </div>
                     
                     <div className="form-group">
-                      <label>Merge Mode</label>
+                      <label>{t.mergeMode}</label>
                       <div className="mode-options">
                         <label className="radio-label">
                           <input 
@@ -659,7 +852,7 @@ export default function App() {
                             checked={mergeMode === 'append'} 
                             onChange={() => setMergeMode('append')}
                           />
-                          Append to Canvas
+                          {t.appendToCanvas}
                         </label>
                         <label className="radio-label">
                           <input 
@@ -669,7 +862,7 @@ export default function App() {
                             checked={mergeMode === 'replace'} 
                             onChange={() => setMergeMode('replace')}
                           />
-                          Replace Canvas
+                          {t.replaceCanvas}
                         </label>
                       </div>
                     </div>
@@ -681,13 +874,13 @@ export default function App() {
                       style={{ opacity: (loading || !consoleLog.trim()) ? 0.6 : 1 }}
                     >
                       {loading ? <RefreshCw className="animate-spin" size={16} /> : <Terminal size={16} />}
-                      Run AI Text Discovery
+                      {t.runAITextDiscovery}
                     </button>
                   </div>
                 ) : (
                   <div className="tab-content">
                     <div className="form-group">
-                      <label>Upload Architecture Diagram / Whiteboard Sketch</label>
+                      <label>{t.uploadArchitectureDiagram}</label>
                       
                       {!imagePreview ? (
                         <div 
@@ -699,8 +892,8 @@ export default function App() {
                           onClick={() => fileInputRef.current && fileInputRef.current.click()}
                         >
                           <Upload className="drag-icon" size={28} />
-                          <p className="drag-label">Drag & drop your diagram image here</p>
-                          <p className="drag-sub">Supports PNG, JPG, SVG or whiteboard photos</p>
+                          <p className="drag-label">{t.dragDropDiagram}</p>
+                          <p className="drag-sub">{t.supportsFormats}</p>
                           <input 
                             type="file" 
                             ref={fileInputRef} 
@@ -756,7 +949,7 @@ export default function App() {
                       style={{ opacity: (loading || !uploadedFile) ? 0.6 : 1 }}
                     >
                       {loading ? <RefreshCw className="animate-spin" size={16} /> : <ImageIcon size={16} />}
-                      Run Multimodal AI OCR
+                      {t.runMultimodalAI}
                     </button>
                   </div>
                 )}
@@ -767,17 +960,17 @@ export default function App() {
                 <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1rem' }}>
                   <button className="btn-secondary" onClick={() => setShowManualBuilder(!showManualBuilder)} style={{ flex: 1 }}>
                     <Plus size={16} />
-                    {showManualBuilder ? 'Hide Builder' : 'Manual Builder'}
+                    {showManualBuilder ? t.hideBuilder : t.manualBuilder}
                   </button>
                   <button className="btn-secondary" onClick={handleLoadDemo} style={{ flex: 1 }}>
                     <Activity size={16} />
-                    Load NOC Demo
+                    {t.loadNocDemo}
                   </button>
                 </div>
                 
                 <button className="btn-secondary" onClick={handleClearCanvas} style={{ width: '100%', borderColor: 'rgba(239, 68, 68, 0.4)', color: '#ef4444' }}>
                   <Trash2 size={16} />
-                  Reset topology Canvas
+                  {t.resetTopologyCanvas}
                 </button>
               </div>
 
@@ -786,58 +979,58 @@ export default function App() {
                 <div className="sidebar-section" style={{ backgroundColor: 'var(--bg-secondary)', borderBottom: '1px solid var(--border-light)' }}>
                   <div className="section-title">
                     <Plus size={18} />
-                    Manual Network Builder
+                    {t.manualNetworkBuilder}
                   </div>
 
                   {/* Node Add */}
                   <form onSubmit={handleAddNode} style={{ marginBottom: '1.25rem', borderBottom: '1px dashed var(--border-color)', paddingBottom: '1rem' }}>
-                    <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>ADD INFRASTRUCTURE DEVICE</div>
+                    <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>{t.addInfrastructureDevice}</div>
                     
                     <div className="form-row">
                       <div className="form-group">
-                        <label>Hostname</label>
+                        <label>{t.hostname}</label>
                         <input 
                           type="text" 
                           className="noc-input"
-                          placeholder="e.g. Sw-Floor-3"
+                          placeholder={lang === 'zh' ? '例如 Sw-Floor-3' : 'e.g. Sw-Floor-3'}
                           value={newNode.label}
                           onChange={(e) => setNewNode({...newNode, label: e.target.value})}
                           required
                         />
                       </div>
                       <div className="form-group">
-                        <label>Device Role</label>
+                        <label>{t.deviceRole}</label>
                         <select 
                           className="noc-select"
                           value={newNode.type}
                           onChange={(e) => setNewNode({...newNode, type: e.target.value})}
                         >
-                          <option value="core-switch">Core Switch</option>
-                          <option value="switch">Switch</option>
-                          <option value="server">Server</option>
-                          <option value="storage">Storage SAN/NAS</option>
-                          <option value="firewall">Firewall</option>
+                          <option value="core-switch">{t.coreSwitch}</option>
+                          <option value="switch">{t.switch}</option>
+                          <option value="server">{t.server}</option>
+                          <option value="storage">{t.storage}</option>
+                          <option value="firewall">{t.firewall}</option>
                         </select>
                       </div>
                     </div>
 
                     <div className="form-row">
                       <div className="form-group">
-                        <label>Management IP</label>
+                        <label>{t.managementIP}</label>
                         <input 
                           type="text" 
                           className="noc-input" 
-                          placeholder="192.168.10.x"
+                          placeholder={lang === 'zh' ? '192.168.10.x' : '192.168.10.x'}
                           value={newNode.ip}
                           onChange={(e) => setNewNode({...newNode, ip: e.target.value})}
                         />
                       </div>
                       <div className="form-group">
-                        <label>MAC Address</label>
+                        <label>{t.macAddress}</label>
                         <input 
                           type="text" 
                           className="noc-input" 
-                          placeholder="00:11:22:..."
+                          placeholder={lang === 'zh' ? '00:11:22:...' : '00:11:22:...'}
                           value={newNode.mac}
                           onChange={(e) => setNewNode({...newNode, mac: e.target.value})}
                         />
@@ -845,37 +1038,37 @@ export default function App() {
                     </div>
 
                     <button type="submit" className="btn-secondary" style={{ width: '100%', padding: '0.4rem' }}>
-                      <Plus size={14} /> Add Node to Canvas
+                      <Plus size={14} /> {t.addNodeToCanvas}
                     </button>
                   </form>
 
                   {/* Connection Add */}
                   {nodes.length >= 2 ? (
                     <form onSubmit={handleAddEdge}>
-                      <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>CONNECT DEVICE PORTS</div>
+                      <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>{t.connectDevicePorts}</div>
                       
                       <div className="form-row">
                         <div className="form-group">
-                          <label>Source Node</label>
+                          <label>{t.sourceNode}</label>
                           <select 
                             className="noc-select"
                             value={newEdge.from}
                             onChange={(e) => setNewEdge({...newEdge, from: e.target.value})}
                             required
                           >
-                            <option value="">-- Select --</option>
+                            <option value="">{t.select}</option>
                             {nodes.map(n => <option key={n.id} value={n.id}>{n.label}</option>)}
                           </select>
                         </div>
                         <div className="form-group">
-                          <label>Destination Node</label>
+                          <label>{t.destinationNode}</label>
                           <select 
                             className="noc-select"
                             value={newEdge.to}
                             onChange={(e) => setNewEdge({...newEdge, to: e.target.value})}
                             required
                           >
-                            <option value="">-- Select --</option>
+                            <option value="">{t.select}</option>
                             {nodes.map(n => <option key={n.id} value={n.id}>{n.label}</option>)}
                           </select>
                         </div>
@@ -883,21 +1076,21 @@ export default function App() {
 
                       <div className="form-row">
                         <div className="form-group">
-                          <label>Outbound Port</label>
+                          <label>{t.outboundPort}</label>
                           <input 
                             type="text" 
                             className="noc-input" 
-                            placeholder="Gi0/1"
+                            placeholder={lang === 'zh' ? 'Gi0/1' : 'Gi0/1'}
                             value={newEdge.fromPort}
                             onChange={(e) => setNewEdge({...newEdge, fromPort: e.target.value})}
                           />
                         </div>
                         <div className="form-group">
-                          <label>Inbound Port</label>
+                          <label>{t.inboundPort}</label>
                           <input 
                             type="text" 
                             className="noc-input" 
-                            placeholder="Eth0"
+                            placeholder={lang === 'zh' ? 'Eth0' : 'Eth0'}
                             value={newEdge.toPort}
                             onChange={(e) => setNewEdge({...newEdge, toPort: e.target.value})}
                           />
@@ -905,12 +1098,12 @@ export default function App() {
                       </div>
 
                       <button type="submit" className="btn-secondary" style={{ width: '100%', padding: '0.4rem' }}>
-                        <Plus size={14} /> Connect Interfaces
+                        <Plus size={14} /> {t.connectInterfaces}
                       </button>
                     </form>
                   ) : (
                     <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', textAlign: 'center' }}>
-                      Add at least 2 devices to enable physical port linkage.
+                      {t.addAtLeast2Devices}
                     </div>
                   )}
                 </div>
@@ -921,7 +1114,7 @@ export default function App() {
             <div className="sidebar-section" style={{ animation: 'fade-in 0.4s ease' }}>
               <div className="section-title">
                 <Shield size={18} />
-                Network Audit Center
+                {t.networkAuditCenter}
               </div>
 
               {auditReport ? (
@@ -947,13 +1140,13 @@ export default function App() {
                     </svg>
 
                     <div className="health-status-desc">
-                      <h3>Security Shield Health</h3>
+                      <h3>{t.securityShieldHealth}</h3>
                       <p>
                         {auditReport.healthScore >= 80 
-                          ? 'Satisfactory network posture. Redundancies and Firewalls active.' 
+                          ? t.satisfactoryNetworkPosture 
                           : auditReport.healthScore >= 50 
-                            ? 'Vulnerabilities detected. Critical redundancy alerts present.'
-                            : 'Severe network posture issues. Core split-brain or perimeter threat exposed.'}
+                            ? t.vulnerabilitiesDetected
+                            : t.severeNetworkPostureIssues}
                       </p>
                     </div>
                   </div>
@@ -974,22 +1167,22 @@ export default function App() {
                       ))
                     ) : (
                       <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textAlign: 'center', padding: '1rem' }}>
-                        No audit items generated.
+                        {t.noAuditItemsGenerated}
                       </div>
                     )}
                   </div>
                   
                   <button className="btn-primary" onClick={() => runAudit()} style={{ marginTop: '1.5rem' }}>
                     <RefreshCw size={16} />
-                    Re-Audit Active Topology
+                    {t.reAuditActiveTopology}
                   </button>
                 </>
               ) : (
                 <div style={{ textAlign: 'center', padding: '2rem 1rem' }}>
                   <Shield size={48} style={{ color: 'var(--border-color)', marginBottom: '1rem' }} />
-                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>No active audit report loaded.</p>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>{t.noActiveAuditReport}</p>
                   <button className="btn-primary" onClick={() => runAudit()} style={{ marginTop: '1rem' }}>
-                    Generate Security Audit
+                    {t.generateSecurityAudit}
                   </button>
                 </div>
               )}
@@ -998,7 +1191,7 @@ export default function App() {
 
           {/* Sidebar Footer */}
           <div style={{ marginTop: 'auto', padding: '1rem', borderTop: '1px solid var(--border-color)', fontSize: '0.7rem', color: '#475569', textAlign: 'center' }}>
-            NOC Auto-Discovery Engine &bull; Antigravity Agentic Design &copy; 2026
+            {t.footerText}
           </div>
         </aside>
       </div>
