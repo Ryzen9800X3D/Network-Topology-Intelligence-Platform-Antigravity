@@ -836,8 +836,13 @@ export default function App() {
                   <div className="tab-content">
                     <div className="form-group">
                       <label>{t.pasteNetworkConsoleOutput}</label>
+                      <textarea
+                        className="noc-input"
+                        rows={10}
                         value={consoleLog}
                         onChange={(e) => setConsoleLog(e.target.value)}
+                        placeholder={t.pasteNetworkConsoleOutput}
+                        style={{ resize: 'vertical', fontFamily: 'monospace', fontSize: '0.85rem' }}
                       />
                     </div>
                     
