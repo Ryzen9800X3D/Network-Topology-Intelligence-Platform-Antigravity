@@ -36,11 +36,25 @@
 
 ## ✨ 功能特色 (Key Features)
 
-### 🤖 AI 驅動發現引擎
-- **CLI 文字解析** — 支援 Cisco LLDP、CDP、MAC 位址表等多種格式自動解析
-- **多模態圖片 OCR** — 上傳網路圖、白板草稿、Visio 截圖，AI 自動識別拓樸
-- **雙模式整合** — 新發現可「追加」至現有畫布或「取代」重建
-- **智慧備用機制** — 無 API Key 時自動切換本地規則引擎，確保功能完整
+### 🧠 多來源拓樸推論引擎 (NTIP Multi-Source Inference Engine)
+- **多協議資料融合** — 結合 LLDP、CDP、MAC Table (FDB)、ARP Table 與 Spanning-Tree (STP) 輸出。
+- **多廠商標準化支援** — 支援 Cisco (IOS/NX-OS)、Fortinet (FortiGate/FortiSwitch)、Aruba (AOS-S/CX)、Juniper (Junos)。
+- **信賴度信心評分體系 (Confidence Scoring)**：
+  - 🟢 **100% 雙向鄰居確認**：A 設備與 B 設備雙向互相可見（實線高對比）。
+  - 🔵 **80% 單向鄰居推論**：僅單側設備有輸出記錄（單向標記）。
+  - 🟡 **70% Base MAC 匹配**：MAC 表中位址與已知交換器 Base MAC 對齊。
+  - 🟠 **60% Trunk / Uplink 聚合判定**：單一連接埠學習 >4 個 MAC 判定為交換器間幹道。
+  - ⚪ **45% 終端主機推論**：單一 MAC 搭配 IEEE OUI 自動識別伺服器 (VMware/Dell)、儲存 (Synology/QNAP)、PC 與 Apple 裝置。
+- **階層化自動排版 (5-Tier Layout)** — 自動將設備歸類至 Firewall ➔ Core ➔ Distribution ➔ Access ➔ Endpoints。
+
+### 📐 原生 Draw.io XML 匯出 (`.drawio`)
+- 一鍵將畫布上拓樸匯出為標準 `network-topology.drawio` 檔案。
+- 具備階層式座標、專屬色彩區分（核心金黃、匯聚天藍、接入灰藍、邊界玫紅）、埠號雙向標籤（如 `Gi1/0/1 ➔ Gi0/24`）與實線/虛線信心度樣式。
+- 可直接在 [diagrams.net (draw.io)](https://app.diagrams.net/) 或 Draw.io 桌面版開啟編輯與調整！
+
+### ⚡ 雙執行環境 (Python CLI + Web UI)
+- **Web UI** — 提供現代化 React NOC 介面，支援一鍵載入 Cisco / Fortinet 範本、圖片 OCR、互動式畫布與安全稽核。
+- **Python CLI (`network_topology/main.py`)** — 可直接於命令列批次解析 log 檔目錄，輸出 Draw.io、SVG 與 JSON 拓樸，並支援兩時間點差異比對 (`--compare`)。
 
 ### 🗺️ 互動式拓樸畫布
 - **Force Atlas 2 物理引擎** — 節點具備彈性排斥與吸引力學，自動展開呈對稱排列
@@ -193,8 +207,10 @@ npm run dev
 
 | 端點 | 方法 | 說明 |
 |------|------|------|
-| `/api/parse` | POST | 解析 CLI 文字輸出為拓樸資料 |
+| `/api/parse` | POST | 解析 CLI 文字輸出為拓樸資料（支援多廠商與信心評分） |
 | `/api/parse-image` | POST | 多模態圖片 OCR 識別拓樸 |
+| `/api/export/drawio` | POST | 匯出原生 Draw.io XML (`.drawio`) 檔案 |
+| `/api/compare` | POST | 比對兩份拓樸快照（T1 vs T2）差異 |
 | `/api/audit` | POST | AI 安全稽核並生成評分報告 |
 
 ---
@@ -209,9 +225,18 @@ Network-Topology-Intelligence-Platform-Antigravity/
 ├── 📄 .gitignore                 # Git 忽略規則
 ├── 📄 start.ps1                  # Windows 一鍵啟動腳本
 │
+├── 📁 network_topology/          # 🧠 Python 核心推論與文件化引擎
+│   ├── 📄 main.py                # 獨立 CLI 工具入口
+│   ├── 📁 models/                # Pydantic 設備/介面/鏈路標準模型
+│   ├── 📁 parsers/               # Cisco / Fortinet / Aruba / Juniper 解析器
+│   ├── 📁 engine/                # 多來源推論 (LLDP/MAC/ARP/OUI) 與 Diff 比對
+│   ├── 📁 graph/                 # 5 層階層排版、Draw.io XML 產生器、SVG 匯出
+│   ├── 📁 samples/               # 企業三層式與校園 CLI 測試範本
+│   └── 📁 tests/                 # 完整自動化單元測試
+│
 ├── 📁 server/                    # Express 後端
-│   ├── 📄 server.js              # API 主程式
-│   ├── 📄 utils.js               # 拓樸聚合與稽核引擎
+│   ├── 📄 server.js              # API 主程式 (含 /api/export/drawio, /api/compare)
+│   ├── 📄 utils.js               # 本地推論、Draw.io XML 產生與稽核引擎
 │   ├── 📄 package.json
 │   └── 📄 .env.example           # 環境變數範本
 │
@@ -221,7 +246,7 @@ Network-Topology-Intelligence-Platform-Antigravity/
 │   ├── 📄 package.json
 │   └── 📁 src/
 │       ├── 📄 main.jsx           # React 入口點
-│       ├── 📄 App.jsx            # 主控元件
+│       ├── 📄 App.jsx            # 主控元件 (含 Draw.io 匯出、信心圖例、範本按鈕)
 │       ├── 📄 icons.js           # SVG 網路設備圖標庫
 │       └── 📄 index.css          # NOC 風格設計系統
 │

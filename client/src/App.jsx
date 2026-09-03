@@ -16,7 +16,10 @@ import {
   X, 
   Activity, 
   Upload, 
-  RefreshCw 
+  RefreshCw,
+  Download,
+  Layers,
+  Sparkles
 } from 'lucide-react';
 import { DataSet } from 'vis-data';
 import { Network as VisNetwork } from 'vis-network';
@@ -291,27 +294,48 @@ export default function App() {
       shadow: { enabled: true, color: 'rgba(0,0,0,0.1)', size: 4, x: 2, y: 2 }
     }));
 
-    // Convert edges to vis-network format
-    const formattedEdges = edges.map((e, idx) => ({
-      id: `edge-${idx}`,
-      from: e.from,
-      to: e.to,
-      label: (e.fromPort || e.toPort) ? `${e.fromPort || ''} ➔ ${e.toPort || ''}` : '',
-      font: {
-        color: '#475569',
-        size: 9,
-        face: 'Inter',
-        background: 'rgba(255, 255, 255, 0.9)',
-        align: 'middle'
-      },
-      color: {
-        color: '#cbd5e1',
-        highlight: '#0284c7',
-        hover: '#0284c7'
-      },
-      width: 2,
-      arrows: { to: { enabled: false } }
-    }));
+    // Convert edges to vis-network format with confidence-based styling
+    const formattedEdges = edges.map((e, idx) => {
+      const conf = e.confidence !== undefined ? e.confidence : 0.8;
+      let strokeColor = '#0284c7';
+      let dashes = false;
+      let width = 2.5;
+
+      if (conf < 0.6) {
+        strokeColor = '#ef4444';
+        dashes = [3, 4];
+        width = 1.8;
+      } else if (conf < 0.8) {
+        strokeColor = '#f59e0b';
+        dashes = [6, 4];
+        width = 2.2;
+      }
+
+      const confLabel = conf < 1.0 ? ` (${Math.round(conf * 100)}%)` : '';
+      const portLabel = (e.fromPort || e.toPort) ? `${e.fromPort || ''} ➔ ${e.toPort || ''}` : '';
+
+      return {
+        id: `edge-${idx}`,
+        from: e.from,
+        to: e.to,
+        label: portLabel ? `${portLabel}${confLabel}` : (confLabel ? confLabel.trim() : ''),
+        font: {
+          color: '#334155',
+          size: 9,
+          face: 'Inter',
+          background: 'rgba(255, 255, 255, 0.9)',
+          align: 'middle'
+        },
+        color: {
+          color: strokeColor,
+          highlight: '#0284c7',
+          hover: '#0284c7'
+        },
+        width: width,
+        dashes: dashes,
+        arrows: { to: { enabled: false } }
+      };
+    });
 
     const data = {
       nodes: new DataSet(formattedNodes),
@@ -632,6 +656,118 @@ export default function App() {
     runAudit(demo);
   };
 
+  // Export Topology to native Draw.io XML (.drawio)
+  const handleExportDrawio = async () => {
+    if (nodes.length === 0) {
+      alert('畫布上目前沒有設備。請先透過發現引擎建立拓樸。');
+      return;
+    }
+    try {
+      const res = await fetch('/api/export/drawio', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ topology: { nodes, edges } })
+      });
+      if (!res.ok) throw new Error('Draw.io 匯出要求失敗');
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `network-topology-${new Date().toISOString().slice(0, 10)}.drawio`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      alert('Draw.io 匯出錯誤: ' + err.message);
+    }
+  };
+
+  // Load Cisco 3-tier sample CLI logs
+  const handleLoadCiscoSample = () => {
+    const ciscoSample = `SW-CORE-01# show lldp neighbors detail
+------------------------------------------------
+Local Interface: TenGigabitEthernet1/1/1
+Chassis id: 001a.2b3c.4d02
+Port id: TenGigabitEthernet1/1/1
+Port Description: Uplink to SW-DIST-01
+System Name: SW-DIST-01
+System Description: Cisco IOS Software, C3850 Software (CAT3K_CAA-UNIVERSALK9-M), Version 16.12.5
+Management Addresses:
+    IP: 10.0.0.2
+
+------------------------------------------------
+Local Interface: TenGigabitEthernet1/1/2
+Chassis id: 001a.2b3c.4d03
+Port id: TenGigabitEthernet1/1/1
+Port Description: Uplink to SW-DIST-02
+System Name: SW-DIST-02
+System Description: Cisco IOS Software, C3850 Software (CAT3K_CAA-UNIVERSALK9-M), Version 16.12.5
+Management Addresses:
+    IP: 10.0.0.3
+
+------------------------------------------------
+Local Interface: GigabitEthernet1/0/24
+Chassis id: 04d5.9012.3456
+Port id: port1
+Port Description: FortiGate WAN Gateway
+System Name: FG-EDGE-01
+System Description: FortiGate-100F v7.2.4
+Management Addresses:
+    IP: 10.0.0.254
+
+SW-ACC-01# show mac address-table
+          Mac Address Table
+-------------------------------------------
+Vlan    Mac Address       Type        Ports
+----    -----------       --------    -----
+  10    0050.568e.1201    DYNAMIC     Gi0/1
+  10    0050.568e.1202    DYNAMIC     Gi0/2
+  20    0011.32aa.bbcc    DYNAMIC     Gi0/3
+  30    a483.e711.2233    DYNAMIC     Gi0/4
+  10    001a.2b3c.4d01    DYNAMIC     Gi0/24
+  10    001a.2b3c.4d02    DYNAMIC     Gi0/24
+  10    001a.2b3c.4d03    DYNAMIC     Gi0/24
+
+SW-CORE-01# show ip arp
+Protocol  Address          Age (min)  Hardware Addr   Type   Interface
+Internet  10.0.0.1                -   001a.2b3c.4d01  ARPA   Vlan1
+Internet  10.0.0.2               12   001a.2b3c.4d02  ARPA   Vlan1
+Internet  10.0.0.3               15   001a.2b3c.4d03  ARPA   Vlan1
+Internet  10.0.0.254              5   04d5.9012.3456  ARPA   Vlan1
+Internet  10.0.10.11             28   0050.568e.1201  ARPA   Vlan10
+Internet  10.0.10.12             19   0050.568e.1202  ARPA   Vlan10
+Internet  10.0.20.50              8   0011.32aa.bbcc  ARPA   Vlan20
+Internet  10.0.30.105             3   a483.e711.2233  ARPA   Vlan30`;
+    setConsoleLog(ciscoSample);
+    setActiveTab('console');
+  };
+
+  // Load Fortinet Campus sample CLI logs
+  const handleLoadFortinetSample = () => {
+    const fortiSample = `FG-EDGE-01 # get switch lldp neighbors-detail
+Port: port1
+Chassis ID: 00:1a:2b:3c:4d:01 (MAC address)
+Port ID: Gi1/0/24 (ifname)
+System Name: SW-CORE-01
+System Description: Cisco Catalyst 9500
+Management Address: 10.0.0.1
+
+Port: port2
+Chassis ID: 08:5b:0e:11:22:01 (MAC address)
+Port ID: port24 (ifname)
+System Name: FS-ACC-01
+System Description: FortiSwitch-108E
+Management Address: 192.168.1.99
+
+FS-ACC-01 # get switch mac-address
+MAC: 00:50:56:8e:12:01  VLAN: 10  Port: port1  Type: dynamic
+MAC: 00:11:32:aa:bb:cc  VLAN: 20  Port: port2  Type: dynamic
+MAC: a4:83:e7:11:22:33  VLAN: 30  Port: port3  Type: dynamic`;
+    setConsoleLog(fortiSample);
+    setActiveTab('console');
+  };
+
   return (
     <div className="app-container">
       {/* Header Area */}
@@ -658,6 +794,27 @@ export default function App() {
         </div>
 
         <div className="noc-status-bar">
+          <button 
+            onClick={handleExportDrawio}
+            title="Download native Draw.io XML format"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              backgroundColor: '#0284c7',
+              color: '#ffffff',
+              border: 'none',
+              borderRadius: '6px',
+              padding: '0.35rem 0.75rem',
+              fontSize: '0.8rem',
+              fontWeight: 600,
+              cursor: 'pointer',
+              boxShadow: '0 1px 2px rgba(0,0,0,0.1)'
+            }}
+          >
+            <Download size={14} />
+            <span>匯出 Draw.io</span>
+          </button>
           <div className="status-item">
             <span className={`status-indicator ${serverMode === 'connected' ? '' : 'blink'}`} style={{
               backgroundColor: serverMode === 'connected' ? '#22c55e' : serverMode === 'mock' ? '#f97316' : '#ef4444',
@@ -705,6 +862,41 @@ export default function App() {
               <p style={{ fontSize: '0.85rem', color: '#94a3b8', marginTop: '0.25rem' }}>
                 {t.uploadOrPaste}
               </p>
+            </div>
+          )}
+
+          {/* Confidence Legend & Canvas Controls */}
+          {nodes.length > 0 && (
+            <div style={{
+              position: 'absolute',
+              top: '0.75rem',
+              left: '0.75rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.75rem',
+              backgroundColor: 'rgba(255, 255, 255, 0.94)',
+              backdropFilter: 'blur(4px)',
+              padding: '0.35rem 0.75rem',
+              borderRadius: '6px',
+              boxShadow: '0 1px 4px rgba(0,0,0,0.08)',
+              border: '1px solid #e2e8f0',
+              zIndex: 15,
+              fontSize: '0.72rem',
+              color: '#475569'
+            }}>
+              <span style={{ fontWeight: 600, color: '#0f172a' }}>連線信心度:</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                <span style={{ display: 'inline-block', width: '16px', height: '3px', backgroundColor: '#0284c7', borderRadius: '1px' }}></span>
+                <span>雙向確認 (≥80%)</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                <span style={{ display: 'inline-block', width: '16px', height: '2px', borderTop: '2px dashed #f59e0b' }}></span>
+                <span>推論 (60-79%)</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                <span style={{ display: 'inline-block', width: '16px', height: '2px', borderTop: '2px dotted #ef4444' }}></span>
+                <span>終端 (&lt;60%)</span>
+              </div>
             </div>
           )}
 
@@ -776,6 +968,24 @@ export default function App() {
                       <span className="inspector-label">{t.inboundPortLabel}:</span>
                       <span className="inspector-value">{selectedItem.data.toPort || t.notAutoDetected}</span>
                     </div>
+                    <div className="inspector-row">
+                      <span className="inspector-label">Confidence:</span>
+                      <span className="inspector-badge" style={{
+                        backgroundColor: (selectedItem.data.confidence || 0.8) >= 0.8 ? '#dbeafe' : ((selectedItem.data.confidence || 0.8) >= 0.6 ? '#fef3c7' : '#fee2e2'),
+                        color: (selectedItem.data.confidence || 0.8) >= 0.8 ? '#1e40af' : ((selectedItem.data.confidence || 0.8) >= 0.6 ? '#92400e' : '#991b1b'),
+                        fontWeight: 600
+                      }}>
+                        {Math.round((selectedItem.data.confidence !== undefined ? selectedItem.data.confidence : 0.8) * 100)}% ({selectedItem.data.status || 'confirmed'})
+                      </span>
+                    </div>
+                    {selectedItem.data.sources && selectedItem.data.sources.length > 0 && (
+                      <div className="inspector-row">
+                        <span className="inspector-label">Inference Sources:</span>
+                        <span className="inspector-value" style={{ fontSize: '0.75rem', color: '#0284c7' }}>
+                          {selectedItem.data.sources.join(', ')}
+                        </span>
+                      </div>
+                    )}
                   </>
                 )}
               </div>
@@ -834,8 +1044,29 @@ export default function App() {
 
                 {activeTab === 'console' ? (
                   <div className="tab-content">
-                    <div className="form-group">
-                      <label>{t.pasteNetworkConsoleOutput}</label>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.35rem' }}>
+                        <label style={{ margin: 0 }}>{lang === 'zh' ? 'CLI 鄰居日誌 / 指令輸出' : 'CLI Neighbor logs / Show output'}</label>
+                      </div>
+                      <div style={{ display: 'flex', gap: '0.4rem', marginBottom: '0.5rem' }}>
+                        <button 
+                          type="button" 
+                          className="btn-secondary" 
+                          onClick={handleLoadCiscoSample}
+                          style={{ flex: 1, fontSize: '0.72rem', padding: '0.3rem 0.4rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.3rem' }}
+                        >
+                          <Sparkles size={12} color="#0284c7" />
+                          {lang === 'zh' ? 'Cisco 3-Tier 範本' : 'Cisco 3-Tier Sample'}
+                        </button>
+                        <button 
+                          type="button" 
+                          className="btn-secondary" 
+                          onClick={handleLoadFortinetSample}
+                          style={{ flex: 1, fontSize: '0.72rem', padding: '0.3rem 0.4rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.3rem' }}
+                        >
+                          <Sparkles size={12} color="#e11d48" />
+                          {lang === 'zh' ? 'Fortinet 園區範本' : 'Fortinet Campus Sample'}
+                        </button>
+                      </div>
                       <textarea
                         className="noc-textarea"
                         value={consoleLog}
@@ -960,14 +1191,18 @@ export default function App() {
 
               {/* Manual Device builder toggler & Quick Actions */}
               <div className="sidebar-section">
-                <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1rem' }}>
+                <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.75rem' }}>
                   <button className="btn-secondary" onClick={() => setShowManualBuilder(!showManualBuilder)} style={{ flex: 1 }}>
-                    <Plus size={16} />
+                    <Plus size={15} />
                     {showManualBuilder ? t.hideBuilder : t.manualBuilder}
                   </button>
                   <button className="btn-secondary" onClick={handleLoadDemo} style={{ flex: 1 }}>
-                    <Activity size={16} />
+                    <Activity size={15} />
                     {t.loadNocDemo}
+                  </button>
+                  <button className="btn-secondary" onClick={handleExportDrawio} style={{ flex: 1.2, color: '#0284c7', borderColor: '#bae6fd' }}>
+                    <Download size={15} />
+                    Draw.io
                   </button>
                 </div>
                 

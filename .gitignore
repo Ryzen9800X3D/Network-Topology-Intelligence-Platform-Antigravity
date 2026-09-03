@@ -26,3 +26,11 @@ dist/
 # OS metadata files
 .DS_Store
 Thumbs.db
+
+# Python bytecode and cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+*.egg-info/
+

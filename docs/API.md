@@ -229,6 +229,64 @@ curl -X POST http://localhost:3001/api/audit \
 
 ---
 
+## POST /api/export/drawio
+
+**用途：** 將拓樸資料轉換為原生 Draw.io XML（`.drawio`），支援直接在 diagrams.net 或桌面版開啟編輯。
+
+### 請求 Body
+
+```json
+{
+  "topology": {
+    "nodes": [
+      { "id": "sw-core-01", "label": "SW-CORE-01", "type": "core-switch", "ip": "10.0.0.1", "tier": 2 }
+    ],
+    "edges": [
+      { "from": "sw-core-01", "to": "sw-dist-01", "fromPort": "Te1/1/1", "toPort": "Te1/1/1", "confidence": 1.0 }
+    ]
+  }
+}
+```
+
+### 回應格式
+
+- `Content-Type: application/xml`
+- `Content-Disposition: attachment; filename="network-topology.drawio"`
+- 回傳符合 mxGraphModel 規範的 XML 內容。
+
+---
+
+## POST /api/compare
+
+**用途：** 比對兩個不同時間點的拓樸快照（T1 vs T2），產出設備與連線之新增、移除與埠號變更報告。
+
+### 請求 Body
+
+```json
+{
+  "t1": { "nodes": [...], "edges": [...] },
+  "t2": { "nodes": [...], "edges": [...] }
+}
+```
+
+### 成功回應 (200 OK)
+
+```json
+{
+  "success": true,
+  "data": {
+    "addedNodes": [],
+    "removedNodes": [],
+    "addedEdges": [],
+    "removedEdges": [],
+    "changedEdges": [],
+    "summary": "Diff Result: +1/-0 Nodes, +0/-0 Links, 1 Port changes"
+  }
+}
+```
+
+---
+
 ## 錯誤碼說明 (Error Codes)
 
 | HTTP 狀態碼 | 說明 |

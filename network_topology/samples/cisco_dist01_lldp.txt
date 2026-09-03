@@ -1,0 +1,31 @@
+Local Interface: TenGigabitEthernet1/1/1
+Chassis id: 001a.2b3c.4d01
+Port id: TenGigabitEthernet1/1/1
+Port Description: Core Uplink
+System Name: SW-CORE-01
+System Description: Cisco Catalyst 9500-48Y4C
+Time remaining: 105 seconds
+Management Addresses:
+    IP: 10.0.0.1
+
+------------------------------------------------
+Local Interface: GigabitEthernet1/0/24
+Chassis id: 001a.2b3c.4d04
+Port id: GigabitEthernet0/24
+Port Description: Access Switch 01
+System Name: SW-ACC-01
+System Description: Cisco Catalyst 9200L-24P-4G
+Time remaining: 112 seconds
+Management Addresses:
+    IP: 10.0.0.11
+
+------------------------------------------------
+Local Interface: GigabitEthernet1/0/23
+Chassis id: 001a.2b3c.4d05
+Port id: GigabitEthernet0/24
+Port Description: Access Switch 02
+System Name: SW-ACC-02
+System Description: Cisco Catalyst 9200L-24P-4G
+Time remaining: 115 seconds
+Management Addresses:
+    IP: 10.0.0.12

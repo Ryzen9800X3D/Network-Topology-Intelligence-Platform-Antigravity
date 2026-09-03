@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="Electron" agent="NTIP-Topology-Engine" version="21.0.0" type="device">
+  <diagram id="ntip-network-topology" name="Network Architecture">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1920" pageHeight="1080" math="0" shadow="1">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="node_sw-core-01" value="&lt;b&gt;SW-CORE-01&lt;/b&gt;&lt;br&gt;&lt;span style='font-size:10px;color:#64748b;'&gt;10.0.0.1&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#d97706;strokeWidth=2;fontStyle=1;fontSize=11;fontColor=#78350f;" vertex="1" parent="1">
+          <mxGeometry x="625" y="190" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="node_sw-dist-01" value="&lt;b&gt;SW-DIST-01&lt;/b&gt;&lt;br&gt;&lt;span style='font-size:10px;color:#64748b;'&gt;10.0.0.2&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e0f2fe;strokeColor=#0284c7;strokeWidth=2;fontStyle=1;fontSize=11;fontColor=#0369a1;" vertex="1" parent="1">
+          <mxGeometry x="391" y="350" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="node_sw-dist-02" value="&lt;b&gt;SW-DIST-02&lt;/b&gt;&lt;br&gt;&lt;span style='font-size:10px;color:#64748b;'&gt;10.0.0.3&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e0f2fe;strokeColor=#0284c7;strokeWidth=2;fontStyle=1;fontSize=11;fontColor=#0369a1;" vertex="1" parent="1">
+          <mxGeometry x="857" y="350" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="node_sw-acc-01" value="&lt;b&gt;SW-ACC-01&lt;/b&gt;&lt;br&gt;&lt;span style='font-size:10px;color:#64748b;'&gt;10.0.0.11&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1f5f9;strokeColor=#475569;strokeWidth=1.5;fontSize=11;fontColor=#1e293b;" vertex="1" parent="1">
+          <mxGeometry x="391" y="510" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="node_fg-edge-01" value="&lt;b&gt;fg-edge-01&lt;/b&gt;&lt;br&gt;&lt;span style='font-size:10px;color:#64748b;'&gt;10.0.0.254&lt;/span&gt;&lt;br&gt;&lt;span style='font-size:9px;color:#94a3b8;'&gt;(FortiGate-100F v7.2.)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe4e6;strokeColor=#e11d48;strokeWidth=2;fontStyle=1;fontSize=11;fontColor=#881337;" vertex="1" parent="1">
+          <mxGeometry x="625" y="30" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="node_sw-acc-02" value="&lt;b&gt;sw-acc-02&lt;/b&gt;&lt;br&gt;&lt;span style='font-size:10px;color:#64748b;'&gt;10.0.0.12&lt;/span&gt;&lt;br&gt;&lt;span style='font-size:9px;color:#94a3b8;'&gt;(Cisco Catalyst 9200L)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1f5f9;strokeColor=#475569;strokeWidth=1.5;fontSize=11;fontColor=#1e293b;" vertex="1" parent="1">
+          <mxGeometry x="857" y="510" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="node_ep-vmware-8e1201" value="&lt;b&gt;VMware-Host (8e:12:01)&lt;/b&gt;&lt;br&gt;&lt;span style='font-size:10px;color:#64748b;'&gt;10.0.10.11&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ccfbf1;strokeColor=#0d9488;strokeWidth=1.5;fontSize=11;fontColor=#134e4a;" vertex="1" parent="1">
+          <mxGeometry x="205" y="670" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="node_ep-vmware-8e1202" value="&lt;b&gt;VMware-Host (8e:12:02)&lt;/b&gt;&lt;br&gt;&lt;span style='font-size:10px;color:#64748b;'&gt;10.0.10.12&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ccfbf1;strokeColor=#0d9488;strokeWidth=1.5;fontSize=11;fontColor=#134e4a;" vertex="1" parent="1">
+          <mxGeometry x="485" y="670" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="node_ep-synology-aabbcc" value="&lt;b&gt;Synology-Host (aa:bb:cc)&lt;/b&gt;&lt;br&gt;&lt;span style='font-size:10px;color:#64748b;'&gt;10.0.20.50&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f3e8ff;strokeColor=#9333ea;strokeWidth=1.5;fontSize=11;fontColor=#581c87;" vertex="1" parent="1">
+          <mxGeometry x="765" y="670" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="node_ep-apple-112233" value="&lt;b&gt;Apple-Host (11:22:33)&lt;/b&gt;&lt;br&gt;&lt;span style='font-size:10px;color:#64748b;'&gt;10.0.30.105&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8fafc;strokeColor=#64748b;strokeWidth=1;fontSize=10;fontColor=#334155;" vertex="1" parent="1">
+          <mxGeometry x="1045" y="670" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_0" value="Te1/1/1 &amp;#x2794; Te1/1/1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0284c7;strokeWidth=2.5;fontSize=9;fontColor=#475569;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="node_sw-core-01" target="node_sw-dist-01">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_1" value="Te1/1/2 &amp;#x2794; Te1/1/1 (80%)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0284c7;strokeWidth=2.5;fontSize=9;fontColor=#475569;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="node_sw-core-01" target="node_sw-dist-02">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_2" value="Gi1/0/24 &amp;#x2794; port1 (80%)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0284c7;strokeWidth=2.5;fontSize=9;fontColor=#475569;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="node_sw-core-01" target="node_fg-edge-01">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_3" value="Gi1/0/24 &amp;#x2794; Gi0/24 (94%)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0284c7;strokeWidth=2.5;fontSize=9;fontColor=#475569;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="node_sw-dist-01" target="node_sw-acc-01">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_4" value="Gi1/0/23 &amp;#x2794; Gi0/24 (80%)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0284c7;strokeWidth=2.5;fontSize=9;fontColor=#475569;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="node_sw-dist-01" target="node_sw-acc-02">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_5" value="Gi0/1 &amp;#x2794; eth0 (45%)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#ef4444;strokeWidth=1.5;dashed=1;fontSize=9;fontColor=#475569;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="node_sw-acc-01" target="node_ep-vmware-8e1201">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_6" value="Gi0/2 &amp;#x2794; eth0 (45%)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#ef4444;strokeWidth=1.5;dashed=1;fontSize=9;fontColor=#475569;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="node_sw-acc-01" target="node_ep-vmware-8e1202">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_7" value="Gi0/3 &amp;#x2794; eth0 (45%)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#ef4444;strokeWidth=1.5;dashed=1;fontSize=9;fontColor=#475569;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="node_sw-acc-01" target="node_ep-synology-aabbcc">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_8" value="Gi0/4 &amp;#x2794; eth0 (45%)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#ef4444;strokeWidth=1.5;dashed=1;fontSize=9;fontColor=#475569;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="node_sw-acc-01" target="node_ep-apple-112233">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_9" value="Gi0/24 &amp;#x2794; uplink (70%)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#f59e0b;strokeWidth=2;dashed=1;fontSize=9;fontColor=#475569;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="node_sw-acc-01" target="node_sw-core-01">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_10" value="Gi0/24 &amp;#x2794; uplink (70%)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#f59e0b;strokeWidth=2;dashed=1;fontSize=9;fontColor=#475569;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="node_sw-acc-01" target="node_sw-dist-02">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

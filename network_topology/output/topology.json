@@ -1,0 +1,677 @@
+{
+  "devices": [
+    {
+      "id": "sw-core-01",
+      "hostname": "SW-CORE-01",
+      "mgmt_ip": "10.0.0.1",
+      "base_mac": "00:1a:2b:3c:4d:01",
+      "vendor": "Unknown",
+      "model": null,
+      "serial": null,
+      "os": null,
+      "device_type": "core-switch",
+      "role": "Core",
+      "tier": 2,
+      "extra": {}
+    },
+    {
+      "id": "sw-dist-01",
+      "hostname": "SW-DIST-01",
+      "mgmt_ip": "10.0.0.2",
+      "base_mac": "00:1a:2b:3c:4d:02",
+      "vendor": "Unknown",
+      "model": null,
+      "serial": null,
+      "os": null,
+      "device_type": "switch",
+      "role": "Distribution",
+      "tier": 3,
+      "extra": {}
+    },
+    {
+      "id": "sw-dist-02",
+      "hostname": "SW-DIST-02",
+      "mgmt_ip": "10.0.0.3",
+      "base_mac": "00:1a:2b:3c:4d:03",
+      "vendor": "Unknown",
+      "model": null,
+      "serial": null,
+      "os": null,
+      "device_type": "switch",
+      "role": "Distribution",
+      "tier": 3,
+      "extra": {}
+    },
+    {
+      "id": "sw-acc-01",
+      "hostname": "SW-ACC-01",
+      "mgmt_ip": "10.0.0.11",
+      "base_mac": "00:1a:2b:3c:4d:04",
+      "vendor": "Unknown",
+      "model": null,
+      "serial": null,
+      "os": null,
+      "device_type": "switch",
+      "role": "Access",
+      "tier": 4,
+      "extra": {}
+    },
+    {
+      "id": "fg-edge-01",
+      "hostname": "fg-edge-01",
+      "mgmt_ip": "10.0.0.254",
+      "base_mac": null,
+      "vendor": "Unknown",
+      "model": "FortiGate-100F v7.2.4",
+      "serial": null,
+      "os": null,
+      "device_type": "firewall",
+      "role": "Firewall",
+      "tier": 1,
+      "extra": {}
+    },
+    {
+      "id": "sw-acc-02",
+      "hostname": "sw-acc-02",
+      "mgmt_ip": "10.0.0.12",
+      "base_mac": null,
+      "vendor": "Unknown",
+      "model": "Cisco Catalyst 9200L-24P-4G",
+      "serial": null,
+      "os": null,
+      "device_type": "switch",
+      "role": "Access",
+      "tier": 4,
+      "extra": {}
+    },
+    {
+      "id": "ep-vmware-8e1201",
+      "hostname": "VMware-Host (8e:12:01)",
+      "mgmt_ip": "10.0.10.11",
+      "base_mac": "00:50:56:8e:12:01",
+      "vendor": "VMware",
+      "model": null,
+      "serial": null,
+      "os": null,
+      "device_type": "server",
+      "role": "Server",
+      "tier": 5,
+      "extra": {}
+    },
+    {
+      "id": "ep-vmware-8e1202",
+      "hostname": "VMware-Host (8e:12:02)",
+      "mgmt_ip": "10.0.10.12",
+      "base_mac": "00:50:56:8e:12:02",
+      "vendor": "VMware",
+      "model": null,
+      "serial": null,
+      "os": null,
+      "device_type": "server",
+      "role": "Server",
+      "tier": 5,
+      "extra": {}
+    },
+    {
+      "id": "ep-synology-aabbcc",
+      "hostname": "Synology-Host (aa:bb:cc)",
+      "mgmt_ip": "10.0.20.50",
+      "base_mac": "00:11:32:aa:bb:cc",
+      "vendor": "Synology",
+      "model": null,
+      "serial": null,
+      "os": null,
+      "device_type": "storage",
+      "role": "Storage",
+      "tier": 5,
+      "extra": {}
+    },
+    {
+      "id": "ep-apple-112233",
+      "hostname": "Apple-Host (11:22:33)",
+      "mgmt_ip": "10.0.30.105",
+      "base_mac": "a4:83:e7:11:22:33",
+      "vendor": "Apple",
+      "model": null,
+      "serial": null,
+      "os": null,
+      "device_type": "endpoint",
+      "role": "Endpoint",
+      "tier": 5,
+      "extra": {}
+    }
+  ],
+  "interfaces": [
+    {
+      "device": "sw-core-01",
+      "name": "Te1/1/1",
+      "raw_name": null,
+      "status": "up",
+      "speed": null,
+      "duplex": null,
+      "mode": "access",
+      "vlan": null,
+      "allowed_vlans": null,
+      "lag_id": null,
+      "description": null
+    },
+    {
+      "device": "sw-dist-01",
+      "name": "Te1/1/1",
+      "raw_name": null,
+      "status": "up",
+      "speed": null,
+      "duplex": null,
+      "mode": "access",
+      "vlan": null,
+      "allowed_vlans": null,
+      "lag_id": null,
+      "description": null
+    },
+    {
+      "device": "sw-core-01",
+      "name": "Te1/1/2",
+      "raw_name": null,
+      "status": "up",
+      "speed": null,
+      "duplex": null,
+      "mode": "access",
+      "vlan": null,
+      "allowed_vlans": null,
+      "lag_id": null,
+      "description": null
+    },
+    {
+      "device": "sw-dist-02",
+      "name": "Te1/1/1",
+      "raw_name": null,
+      "status": "up",
+      "speed": null,
+      "duplex": null,
+      "mode": "access",
+      "vlan": null,
+      "allowed_vlans": null,
+      "lag_id": null,
+      "description": null
+    },
+    {
+      "device": "sw-core-01",
+      "name": "Gi1/0/24",
+      "raw_name": null,
+      "status": "up",
+      "speed": null,
+      "duplex": null,
+      "mode": "access",
+      "vlan": null,
+      "allowed_vlans": null,
+      "lag_id": null,
+      "description": null
+    },
+    {
+      "device": "fg-edge-01",
+      "name": "port1",
+      "raw_name": null,
+      "status": "up",
+      "speed": null,
+      "duplex": null,
+      "mode": "access",
+      "vlan": null,
+      "allowed_vlans": null,
+      "lag_id": null,
+      "description": null
+    },
+    {
+      "device": "sw-dist-01",
+      "name": "Gi1/0/24",
+      "raw_name": null,
+      "status": "up",
+      "speed": null,
+      "duplex": null,
+      "mode": "access",
+      "vlan": null,
+      "allowed_vlans": null,
+      "lag_id": null,
+      "description": null
+    },
+    {
+      "device": "sw-acc-01",
+      "name": "Gi0/24",
+      "raw_name": null,
+      "status": "up",
+      "speed": null,
+      "duplex": null,
+      "mode": "trunk",
+      "vlan": null,
+      "allowed_vlans": null,
+      "lag_id": null,
+      "description": null
+    },
+    {
+      "device": "sw-dist-01",
+      "name": "Gi1/0/23",
+      "raw_name": null,
+      "status": "up",
+      "speed": null,
+      "duplex": null,
+      "mode": "access",
+      "vlan": null,
+      "allowed_vlans": null,
+      "lag_id": null,
+      "description": null
+    },
+    {
+      "device": "sw-acc-02",
+      "name": "Gi0/24",
+      "raw_name": null,
+      "status": "up",
+      "speed": null,
+      "duplex": null,
+      "mode": "access",
+      "vlan": null,
+      "allowed_vlans": null,
+      "lag_id": null,
+      "description": null
+    },
+    {
+      "device": "sw-acc-01",
+      "name": "Gi0/1",
+      "raw_name": null,
+      "status": "up",
+      "speed": null,
+      "duplex": null,
+      "mode": "access",
+      "vlan": null,
+      "allowed_vlans": "10",
+      "lag_id": null,
+      "description": null
+    },
+    {
+      "device": "ep-vmware-8e1201",
+      "name": "eth0",
+      "raw_name": null,
+      "status": "up",
+      "speed": null,
+      "duplex": null,
+      "mode": "access",
+      "vlan": null,
+      "allowed_vlans": "10",
+      "lag_id": null,
+      "description": null
+    },
+    {
+      "device": "sw-acc-01",
+      "name": "Gi0/2",
+      "raw_name": null,
+      "status": "up",
+      "speed": null,
+      "duplex": null,
+      "mode": "access",
+      "vlan": null,
+      "allowed_vlans": "10",
+      "lag_id": null,
+      "description": null
+    },
+    {
+      "device": "ep-vmware-8e1202",
+      "name": "eth0",
+      "raw_name": null,
+      "status": "up",
+      "speed": null,
+      "duplex": null,
+      "mode": "access",
+      "vlan": null,
+      "allowed_vlans": "10",
+      "lag_id": null,
+      "description": null
+    },
+    {
+      "device": "sw-acc-01",
+      "name": "Gi0/3",
+      "raw_name": null,
+      "status": "up",
+      "speed": null,
+      "duplex": null,
+      "mode": "access",
+      "vlan": null,
+      "allowed_vlans": "20",
+      "lag_id": null,
+      "description": null
+    },
+    {
+      "device": "ep-synology-aabbcc",
+      "name": "eth0",
+      "raw_name": null,
+      "status": "up",
+      "speed": null,
+      "duplex": null,
+      "mode": "access",
+      "vlan": null,
+      "allowed_vlans": "20",
+      "lag_id": null,
+      "description": null
+    },
+    {
+      "device": "sw-acc-01",
+      "name": "Gi0/4",
+      "raw_name": null,
+      "status": "up",
+      "speed": null,
+      "duplex": null,
+      "mode": "access",
+      "vlan": null,
+      "allowed_vlans": "30",
+      "lag_id": null,
+      "description": null
+    },
+    {
+      "device": "ep-apple-112233",
+      "name": "eth0",
+      "raw_name": null,
+      "status": "up",
+      "speed": null,
+      "duplex": null,
+      "mode": "access",
+      "vlan": null,
+      "allowed_vlans": "30",
+      "lag_id": null,
+      "description": null
+    },
+    {
+      "device": "sw-core-01",
+      "name": "uplink",
+      "raw_name": null,
+      "status": "up",
+      "speed": null,
+      "duplex": null,
+      "mode": "trunk",
+      "vlan": null,
+      "allowed_vlans": null,
+      "lag_id": null,
+      "description": null
+    },
+    {
+      "device": "sw-dist-02",
+      "name": "uplink",
+      "raw_name": null,
+      "status": "up",
+      "speed": null,
+      "duplex": null,
+      "mode": "trunk",
+      "vlan": null,
+      "allowed_vlans": null,
+      "lag_id": null,
+      "description": null
+    }
+  ],
+  "links": [
+    {
+      "src": "sw-core-01",
+      "src_port": "Te1/1/1",
+      "dst": "sw-dist-01",
+      "dst_port": "Te1/1/1",
+      "confidence": 1.0,
+      "sources": [
+        "bidirectional_lldp",
+        "lldp"
+      ],
+      "status": "confirmed",
+      "link_type": "physical",
+      "vlans": null
+    },
+    {
+      "src": "sw-core-01",
+      "src_port": "Te1/1/2",
+      "dst": "sw-dist-02",
+      "dst_port": "Te1/1/1",
+      "confidence": 0.8,
+      "sources": [
+        "lldp"
+      ],
+      "status": "confirmed",
+      "link_type": "physical",
+      "vlans": null
+    },
+    {
+      "src": "sw-core-01",
+      "src_port": "Gi1/0/24",
+      "dst": "fg-edge-01",
+      "dst_port": "port1",
+      "confidence": 0.8,
+      "sources": [
+        "lldp"
+      ],
+      "status": "confirmed",
+      "link_type": "physical",
+      "vlans": null
+    },
+    {
+      "src": "sw-dist-01",
+      "src_port": "Gi1/0/24",
+      "dst": "sw-acc-01",
+      "dst_port": "Gi0/24",
+      "confidence": 0.94,
+      "sources": [
+        "lldp",
+        "base_mac_match"
+      ],
+      "status": "confirmed",
+      "link_type": "physical",
+      "vlans": null
+    },
+    {
+      "src": "sw-dist-01",
+      "src_port": "Gi1/0/23",
+      "dst": "sw-acc-02",
+      "dst_port": "Gi0/24",
+      "confidence": 0.8,
+      "sources": [
+        "lldp"
+      ],
+      "status": "confirmed",
+      "link_type": "physical",
+      "vlans": null
+    },
+    {
+      "src": "sw-acc-01",
+      "src_port": "Gi0/1",
+      "dst": "ep-vmware-8e1201",
+      "dst_port": "eth0",
+      "confidence": 0.45,
+      "sources": [
+        "oui_lookup",
+        "mac_table_single_host"
+      ],
+      "status": "inferred",
+      "link_type": "access",
+      "vlans": "10"
+    },
+    {
+      "src": "sw-acc-01",
+      "src_port": "Gi0/2",
+      "dst": "ep-vmware-8e1202",
+      "dst_port": "eth0",
+      "confidence": 0.45,
+      "sources": [
+        "oui_lookup",
+        "mac_table_single_host"
+      ],
+      "status": "inferred",
+      "link_type": "access",
+      "vlans": "10"
+    },
+    {
+      "src": "sw-acc-01",
+      "src_port": "Gi0/3",
+      "dst": "ep-synology-aabbcc",
+      "dst_port": "eth0",
+      "confidence": 0.45,
+      "sources": [
+        "oui_lookup",
+        "mac_table_single_host"
+      ],
+      "status": "inferred",
+      "link_type": "access",
+      "vlans": "20"
+    },
+    {
+      "src": "sw-acc-01",
+      "src_port": "Gi0/4",
+      "dst": "ep-apple-112233",
+      "dst_port": "eth0",
+      "confidence": 0.45,
+      "sources": [
+        "oui_lookup",
+        "mac_table_single_host"
+      ],
+      "status": "inferred",
+      "link_type": "access",
+      "vlans": "30"
+    },
+    {
+      "src": "sw-acc-01",
+      "src_port": "Gi0/24",
+      "dst": "sw-core-01",
+      "dst_port": "uplink",
+      "confidence": 0.7,
+      "sources": [
+        "base_mac_match"
+      ],
+      "status": "inferred",
+      "link_type": "trunk",
+      "vlans": null
+    },
+    {
+      "src": "sw-acc-01",
+      "src_port": "Gi0/24",
+      "dst": "sw-dist-02",
+      "dst_port": "uplink",
+      "confidence": 0.7,
+      "sources": [
+        "base_mac_match"
+      ],
+      "status": "inferred",
+      "link_type": "trunk",
+      "vlans": null
+    }
+  ],
+  "mac_entries": [
+    {
+      "device": "sw-acc-01",
+      "vlan": 10,
+      "mac": "00:50:56:8e:12:01",
+      "port": "Gi0/1",
+      "entry_type": "DYNAMIC"
+    },
+    {
+      "device": "sw-acc-01",
+      "vlan": 10,
+      "mac": "00:50:56:8e:12:02",
+      "port": "Gi0/2",
+      "entry_type": "DYNAMIC"
+    },
+    {
+      "device": "sw-acc-01",
+      "vlan": 20,
+      "mac": "00:11:32:aa:bb:cc",
+      "port": "Gi0/3",
+      "entry_type": "DYNAMIC"
+    },
+    {
+      "device": "sw-acc-01",
+      "vlan": 30,
+      "mac": "a4:83:e7:11:22:33",
+      "port": "Gi0/4",
+      "entry_type": "DYNAMIC"
+    },
+    {
+      "device": "sw-acc-01",
+      "vlan": 10,
+      "mac": "00:1a:2b:3c:4d:01",
+      "port": "Gi0/24",
+      "entry_type": "DYNAMIC"
+    },
+    {
+      "device": "sw-acc-01",
+      "vlan": 10,
+      "mac": "00:1a:2b:3c:4d:02",
+      "port": "Gi0/24",
+      "entry_type": "DYNAMIC"
+    },
+    {
+      "device": "sw-acc-01",
+      "vlan": 10,
+      "mac": "00:1a:2b:3c:4d:03",
+      "port": "Gi0/24",
+      "entry_type": "DYNAMIC"
+    },
+    {
+      "device": "sw-acc-01",
+      "vlan": 10,
+      "mac": "04:d5:90:12:34:56",
+      "port": "Gi0/24",
+      "entry_type": "DYNAMIC"
+    }
+  ],
+  "arp_entries": [
+    {
+      "ip": "10.0.0.1",
+      "mac": "00:1a:2b:3c:4d:01",
+      "interface": "Vlan1",
+      "device": "sw-core-01"
+    },
+    {
+      "ip": "10.0.0.2",
+      "mac": "00:1a:2b:3c:4d:02",
+      "interface": "Vlan1",
+      "device": "sw-core-01"
+    },
+    {
+      "ip": "10.0.0.3",
+      "mac": "00:1a:2b:3c:4d:03",
+      "interface": "Vlan1",
+      "device": "sw-core-01"
+    },
+    {
+      "ip": "10.0.0.11",
+      "mac": "00:1a:2b:3c:4d:04",
+      "interface": "Vlan1",
+      "device": "sw-core-01"
+    },
+    {
+      "ip": "10.0.0.254",
+      "mac": "04:d5:90:12:34:56",
+      "interface": "Vlan1",
+      "device": "sw-core-01"
+    },
+    {
+      "ip": "10.0.10.11",
+      "mac": "00:50:56:8e:12:01",
+      "interface": "Vlan10",
+      "device": "sw-core-01"
+    },
+    {
+      "ip": "10.0.10.12",
+      "mac": "00:50:56:8e:12:02",
+      "interface": "Vlan10",
+      "device": "sw-core-01"
+    },
+    {
+      "ip": "10.0.20.50",
+      "mac": "00:11:32:aa:bb:cc",
+      "interface": "Vlan20",
+      "device": "sw-core-01"
+    },
+    {
+      "ip": "10.0.30.105",
+      "mac": "a4:83:e7:11:22:33",
+      "interface": "Vlan30",
+      "device": "sw-core-01"
+    }
+  ],
+  "stp_info": [],
+  "metadata": {
+    "inferred_nodes_count": 10,
+    "inferred_links_count": 11,
+    "mac_count": 8
+  }
+}

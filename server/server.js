@@ -7,6 +7,9 @@ const {
   getDemoTopology, 
   getImageDemoTopology, 
   computeTopology, 
+  parseMultiVendorConsole,
+  generateDrawioXml,
+  compareTopologies,
   performMockAudit 
 } = require("./utils");
 
@@ -163,22 +166,22 @@ ${consoleLog}`;
       return res.json({ success: true, data: finalTopology });
     } catch (error) {
       console.error("Gemini Parse Error, falling back to regex: ", error);
-      const parsedTopology = fallbackRegexParse(consoleLog);
+      const parsedTopology = parseMultiVendorConsole(consoleLog);
       const finalTopology = computeTopology(existing, parsedTopology, mode);
       return res.json({ 
         success: true, 
         data: finalTopology, 
-        warning: `Gemini parsing failed (${error.message}). Fell back to regex parsing.` 
+        warning: `Gemini parsing failed (${error.message}). Fell back to multi-vendor inference engine.` 
       });
     }
   } else {
-    // Mock Mode
-    const parsedTopology = fallbackRegexParse(consoleLog);
+    // Local Multi-Source Inference Mode
+    const parsedTopology = parseMultiVendorConsole(consoleLog);
     const finalTopology = computeTopology(existing, parsedTopology, mode);
     return res.json({ 
       success: true, 
       data: finalTopology, 
-      warning: "Server running in Mock mode. Console parsed using local regex parser." 
+      warning: "Parsed using NTIP Multi-Source Inference Engine (Confidence-scored)." 
     });
   }
 });
@@ -338,6 +341,42 @@ No markdown wrappers or explanation.`;
       data: auditResult, 
       warning: "Server running in Mock mode. Audit performed using local static analyzer rules." 
     });
+  }
+});
+
+// -------------------------------------------------------------
+// Endpoint: POST /api/export/drawio
+// -------------------------------------------------------------
+app.post("/api/export/drawio", (req, res) => {
+  try {
+    const { topology } = req.body;
+    if (!topology || !topology.nodes) {
+      return res.status(400).json({ success: false, error: "No topology data provided." });
+    }
+    const xml = generateDrawioXml(topology);
+    res.setHeader("Content-Type", "application/xml");
+    res.setHeader("Content-Disposition", 'attachment; filename="network-topology.drawio"');
+    return res.send(xml);
+  } catch (err) {
+    console.error("Export Draw.io error:", err);
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// -------------------------------------------------------------
+// Endpoint: POST /api/compare
+// -------------------------------------------------------------
+app.post("/api/compare", (req, res) => {
+  try {
+    const { t1, t2 } = req.body;
+    if (!t1 || !t2) {
+      return res.status(400).json({ success: false, error: "Both t1 and t2 topology snapshots required." });
+    }
+    const diff = compareTopologies(t1, t2);
+    return res.json({ success: true, data: diff });
+  } catch (err) {
+    console.error("Compare error:", err);
+    return res.status(500).json({ success: false, error: err.message });
   }
 });
 
