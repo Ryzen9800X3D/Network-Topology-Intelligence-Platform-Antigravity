@@ -1044,6 +1044,7 @@ MAC: a4:83:e7:11:22:33  VLAN: 30  Port: port3  Type: dynamic`;
 
                 {activeTab === 'console' ? (
                   <div className="tab-content">
+                    <div className="form-group">
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.35rem' }}>
                         <label style={{ margin: 0 }}>{lang === 'zh' ? 'CLI 鄰居日誌 / 指令輸出' : 'CLI Neighbor logs / Show output'}</label>
                       </div>
